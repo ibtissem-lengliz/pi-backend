@@ -26,18 +26,20 @@ class Membre
      * @ORM\Column(type="integer")
      */
     private $idMembre;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $nom;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $prenom;
 
     /**
      * @ORM\Column(type="date")
      */
     private $dateDeNaissance;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $estMembre;
-
-    /**
+        /**
      * @ORM\Column(type="float", nullable=true)
      */
     private $poids;
@@ -48,9 +50,10 @@ class Membre
     private $taille;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="boolean", nullable=true)
      */
-    private $nom;
+    private $estMembre;
+ 
 
     /**
      * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
@@ -85,6 +88,28 @@ class Membre
     public function setIdMembre(int $idMembre): self
     {
         $this->idMembre = $idMembre;
+
+        return $this;
+    }
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): self
+    {
+        $this->prenom = $prenom;
 
         return $this;
     }
@@ -137,19 +162,6 @@ class Membre
 
         return $this;
     }
-
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
-    public function setNom(string $nom): self
-    {
-        $this->nom = $nom;
-
-        return $this;
-    }
-
     public function getUser(): ?User
     {
         return $this->user;
