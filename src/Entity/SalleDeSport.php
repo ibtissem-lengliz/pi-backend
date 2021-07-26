@@ -132,7 +132,7 @@ class SalleDeSport
 
     public function getUser(): ?User
     {
-        return $this->user;
+        return $this->utilisateur;
     }
 
     public function setUser(?User $user): self
