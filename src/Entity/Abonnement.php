@@ -30,10 +30,10 @@ class Abonnement
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $prenom;
+    private $numAbonnement;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     private $duree;
 
@@ -70,14 +70,14 @@ class Abonnement
         return $this;
     }
 
-    public function getPrenom(): ?string
+    public function getNumAbonnement(): ?string
     {
-        return $this->prenom;
+        return $this->numAbonnement;
     }
 
-    public function setPrenom(?string $prenom): self
+    public function setNumAbonnement(?string $numAbonnement): self
     {
-        $this->prenom = $prenom;
+        $this->numAbonnement = $numAbonnement;
 
         return $this;
     }
