@@ -73,6 +73,26 @@ class Evenement
      */
     private $categorie;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $nbparticipant;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $nbmaxparticipant;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $raisondesactivation;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $state;
+
     public function __construct()
     {
         $this->membres = new ArrayCollection();
@@ -168,7 +188,6 @@ class Evenement
     }
 
 
-
     /**
      * @return Collection|Membre[]
      */
@@ -213,6 +232,54 @@ class Evenement
     public function setCategorie(?Categorie $categorie): self
     {
         $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    public function getNbparticipant(): ?int
+    {
+        return $this->nbparticipant;
+    }
+
+    public function setNbparticipant(?int $nbparticipant): self
+    {
+        $this->nbparticipant = $nbparticipant;
+
+        return $this;
+    }
+
+    public function getNbmaxparticipant(): ?int
+    {
+        return $this->nbmaxparticipant;
+    }
+
+    public function setNbmaxparticipant(?int $nbmaxparticipant): self
+    {
+        $this->nbmaxparticipant = $nbmaxparticipant;
+
+        return $this;
+    }
+
+    public function getRaisondesactivation(): ?string
+    {
+        return $this->raisondesactivation;
+    }
+
+    public function setRaisondesactivation(?string $raisondesactivation): self
+    {
+        $this->raisondesactivation = $raisondesactivation;
+
+        return $this;
+    }
+
+    public function getState(): ?bool
+    {
+        return $this->state;
+    }
+
+    public function setState(?bool $state): self
+    {
+        $this->state = $state;
 
         return $this;
     }
