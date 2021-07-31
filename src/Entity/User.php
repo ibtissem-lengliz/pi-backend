@@ -6,9 +6,14 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\SerializedName;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ * normalizationContext={"groups"={"user:read"}},
+ *  denormalizationContext={"groups"={"user:write"}}
+ * )
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
 class User implements UserInterface
@@ -17,16 +22,19 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * Groups("user:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"user:read", "user:write"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"user:read", "user:write"})
      */
     private $roles = [];
 
@@ -39,8 +47,30 @@ class User implements UserInterface
     /**
      * @var string le token qui servira lors de l'oubli de mot de passe
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"user:read", "user:write"})
      */
     protected $resetToken;
+
+     /**
+     * @ORM\Column(type="integer")
+     * @Groups({"user:read", "user:write"})
+     */
+    private $lattitude;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Groups({"user:read", "user:write"})
+     */
+    private $longitude;
+
+   /**
+     * @Groups("user:write")
+     *
+     * @SerializedName("password")
+     */
+    private $plainPassword;
+
+    
 
     public function getId(): ?int
     {
@@ -119,18 +149,10 @@ class User implements UserInterface
      */
     public function eraseCredentials()
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        //If you store any temporary, sensitive data on the user, clear it here
+        $this->plainPassword = null;
     }
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $lattitude;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $longitude;
+   
     public function getLattitude(): ?int
     {
         return $this->lattitude;
@@ -167,5 +189,17 @@ class User implements UserInterface
     public function setResetToken(?string $resetToken): void
     {
         $this->resetToken = $resetToken;
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
     }
 }
